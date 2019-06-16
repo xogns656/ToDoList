@@ -5,9 +5,6 @@ import GroupEntry from "./GroupEntry"
 //그룹추가 후 추가창 초기화시키기
 
 class Group extends React.Component {
-  constructor(props) {
-    super(props)
-  }
   //입력한 값을 그룹받아서
   inputGroup(event) {
     //빈칸이 아닌상태에서 엔터를 입력했을 때

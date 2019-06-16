@@ -12,10 +12,10 @@ class App extends React.Component {
     super(props)
     this.state = {
       //미리알림은 미리 생성된 그룹목록이다.
-      allData: { "완료된 알림": [12, 3, 4] },
+      allData: { "완료된 알림": [] },
       //검색한 데이터들만 따로 담기위한 배열이다.
       searchData: [],
-      selectGroupTitle: "타이틀프로토타입"
+      selectGroupTitle: "Title Portotype"
     }
   }
   //완료된 알림에 들어있는 모든 배열의 내용을 삭제 해 준다.
@@ -26,9 +26,26 @@ class App extends React.Component {
   }
 
   //입력받은데이터를 현재 속한 그룹의 배열에 넣고 출력해준다.
-  outputData(UpdateAllData) {
+  outputData(updateAllData) {
     this.setState({
-      allData: UpdateAllData
+      //데이터를 업데이트 후 재 랜더링을 실시한다.
+      allData: updateAllData
+    })
+  }
+
+  //검색한 데이터를 실시간으로 출력시킨다.
+  //검색은 따로 그룹이 추가되는 것이 아니고, 타이틀과 목록만 바뀌도록 설정해준다.
+  searchData(filterData, searchTitle) {
+    this.setState({
+      searchData: filterData,
+      //검색어가 있으면 Searching이라는 메시지를 띄워주고, 내용이 아무것도 없다면 초기화 시켜준다.
+      selectGroupTitle: searchTitle ? "Searching for '" + searchTitle + "'" : undefined
+    })
+  }
+
+  completeData(changeData) {
+    this.setState({
+      allData: changeData
     })
   }
 
@@ -59,7 +76,8 @@ class App extends React.Component {
         <div className="left-side-group">
           <div>
             {/*검색어 입력*/}
-            <Search />
+            {/*모든 데이터들의 배열을 가지고 들어간다*/}
+            <Search allData={this.state.allData} searchData={this.searchData.bind(this)} />
           </div>
           <div>
             {/*그룹생성 및 생성된 그룹리스트를 보여주기 위함*/}
@@ -92,6 +110,8 @@ class App extends React.Component {
               selectGroupTitle={this.state.selectGroupTitle}
               allData={this.state.allData}
               outputData={this.outputData.bind(this)}
+              searchData={this.state.searchData}
+              completeData={this.completeData.bind(this)}
             />
           </div>
         </div>

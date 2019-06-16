@@ -1,10 +1,6 @@
 import React from "react"
 
 class GroupEntry extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
   forDelete(group) {
     this.props.deleteGroup(group.target.className)
   }
