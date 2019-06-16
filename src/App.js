@@ -50,10 +50,10 @@ class App extends React.Component {
   }
 
   addGroup(group) {
-    if (group.length) {
-      //새로운그룹을 생성해주고, 데이터의 목록을 추가할 배열을 같이 할당해준다.
-      this.setState((this.state.allData[group] = []))
-    }
+    //새로운그룹을 생성해주고, 데이터의 목록을 추가할 배열을 같이 할당해준다.
+    this.setState({
+      allData: group
+    })
   }
 
   //클릭한 그룹명을 받아오면 모든데이터중 해당 그룹명에 해당하는 그룹만 삭제해준다.

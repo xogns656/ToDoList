@@ -10,7 +10,8 @@ class Group extends React.Component {
     //빈칸이 아닌상태에서 엔터를 입력했을 때
     if (event.keyCode === 13 && event.target.value.length) {
       //그룹목록에 추가해준다.
-      this.props.addGroup(event.target.value)
+      this.props.allData[event.target.value] = []
+      this.props.addGroup(this.props.allData)
     }
   }
 
