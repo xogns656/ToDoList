@@ -45,14 +45,17 @@ class App extends React.Component {
   }
 
   searchDataClear(filterData) {
+    console.log(filterData)
     this.setState({
-      searchData: []
+      searchData: filterData
     })
   }
 
-  completeData(changeData) {
+  completeData(changeData, filterData) {
+    console.log(filterData)
     this.setState({
-      allData: changeData
+      allData: changeData,
+      searchData: filterData
     })
   }
 
@@ -122,6 +125,7 @@ class App extends React.Component {
               allData={this.state.allData}
               outputData={this.outputData.bind(this)}
               searchData={this.state.searchData}
+              searchDataClear={this.searchDataClear.bind(this)}
               completeData={this.completeData.bind(this)}
             />
           </div>

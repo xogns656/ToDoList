@@ -43,7 +43,12 @@ class TodoList extends React.Component {
         ) : (
           //만약 서칭된 데이터가 있다면, searchData를 Entry로 내려준다.
           <div>
-            <TodoListEntry searchData={this.props.searchData} allData={this.props.allData} />
+            <TodoListEntry
+              searchData={this.props.searchData}
+              searchDataClear={this.props.searchDataClear}
+              allData={this.props.allData}
+              completeData={this.props.completeData}
+            />
           </div>
         )}
       </div>

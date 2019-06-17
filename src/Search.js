@@ -7,9 +7,14 @@ class Search extends React.Component {
   forSearch(event) {
     let filterObj = {}
     let allDataKeys = Object.keys(this.props.allData)
+
+    //1. 검색어가 담긴 객체를 생성하기
+    //완료된 목록은 포함하지 않는 모든 그룹의 목록을 만들어주고
     for (let i = 1; i < allDataKeys.length; i++) {
       filterObj[allDataKeys[i]] = []
     }
+    //원본 데이터에 검색어에 해당하는 단어가 있다면, 위에서 만들어준 객체내부에서 동일한 그룹명을 찾아
+    //그 안에 검색된 데이터를 넣어준다.
     for (let i = 1; i < allDataKeys.length; i++) {
       for (let value of this.props.allData[allDataKeys[i]]) {
         if (Hangul.search(value, event.target.value) === 0) {
@@ -17,7 +22,8 @@ class Search extends React.Component {
         }
       }
     }
-    //주어진 className으로 구분할것
+
+    //검색했을때 가독성을 좋게 하기 위해 다음과 같이 변경한 뒤, 리스트에 출력되도록한다.
     let classifiedByClassName = []
     for (let keys in filterObj) {
       if (filterObj[keys].length) {
@@ -33,7 +39,7 @@ class Search extends React.Component {
   forClear(event) {
     if (event.keyCode === 13) {
       //데이터 초기화
-      this.props.searchDataClear()
+      this.props.searchDataClear([])
       //검색창 초기화
       event.target.value = ""
     }
