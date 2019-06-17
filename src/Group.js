@@ -12,6 +12,7 @@ class Group extends React.Component {
       //그룹목록에 추가해준다.
       this.props.allData[event.target.value] = []
       this.props.addGroup(this.props.allData)
+      event.target.value = ""
     }
   }
 

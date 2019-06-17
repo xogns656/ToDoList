@@ -14,6 +14,7 @@ class App extends React.Component {
       //미리알림은 미리 생성된 그룹목록이다.
       allData: { "완료된 알림": [] },
       //검색한 데이터들만 따로 담기위한 배열이다.
+      filterObj: {},
       searchData: [],
       selectGroupTitle: "Title Portotype"
     }
@@ -40,6 +41,12 @@ class App extends React.Component {
       searchData: filterData,
       //검색어가 있으면 Searching이라는 메시지를 띄워주고, 내용이 아무것도 없다면 초기화 시켜준다.
       selectGroupTitle: searchTitle ? "Searching for '" + searchTitle + "'" : undefined
+    })
+  }
+
+  searchDataClear(filterData) {
+    this.setState({
+      searchData: []
     })
   }
 
@@ -77,7 +84,11 @@ class App extends React.Component {
           <div>
             {/*검색어 입력*/}
             {/*모든 데이터들의 배열을 가지고 들어간다*/}
-            <Search allData={this.state.allData} searchData={this.searchData.bind(this)} />
+            <Search
+              allData={this.state.allData}
+              searchData={this.searchData.bind(this)}
+              searchDataClear={this.searchDataClear.bind(this)}
+            />
           </div>
           <div>
             {/*그룹생성 및 생성된 그룹리스트를 보여주기 위함*/}
