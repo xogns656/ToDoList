@@ -2,9 +2,25 @@ import React from "react"
 const completeDate = require("moment")
 
 class TodoListEntry extends React.Component {
+  returnData(event) {
+    //클릭한 곳의 클래스 네임은 데이터 + 그룹의 형식으로 나올것이고
+    let className = event.target.className.split(" ")
+    //배열로 만들어 데이터와 그룹을 따로 분리해준다.
+    let data = className[0]
+    let group = className[1]
+    //원본데이터중에서 원래 있던 곳으로 돌려 놓은 뒤
+    this.props.allData[group].push(data)
+    //업데이트한 데이터를 완료된 알림 리스트에서 지워준다.
+    this.props.allData["완료된 알림"].splice(
+      this.props.allData["완료된 알림"].indexOf(event.target.value),
+      1
+    )
+    //업데이트한 결과를 다시 랜더링해준다.
+    this.props.outputData(this.props.allData)
+  }
+
   forCheck(event) {
     //라디오버튼에 체크가되면 '완료된 알림'목록으로 이동시킨다.
-
     let originalData = event.target.value
     //1. 만약 클릭된 버튼이 서칭결과에 있는 것이라면
     if (!this.props.selectGroupTitle) {
@@ -13,11 +29,13 @@ class TodoListEntry extends React.Component {
       let selectGroupTitle = splitData[1].split(" ")[0]
 
       this.props.allData["완료된 알림"].push(
-        event.target.value +
-          "\t\t" +
-          completeDate().format("YY. M. D, h:mm a") +
+        completeDate().format("YY. M. D, h:mm a") +
+          " : " +
+          event.target.value +
+          " ( " +
           selectGroupTitle +
-          " 으로부터 삭제됨."
+          " 에서 삭제됨" +
+          " ) "
       )
       //서칭결과에서 지운 리스트가 원본에도 영향을 미칠수 있도록 업데이트 해준다.
       this.props.allData[selectGroupTitle].splice(
@@ -28,14 +46,17 @@ class TodoListEntry extends React.Component {
       //업데이트 된 배열을 만들어준다.
       this.props.searchData.splice(this.props.searchData.indexOf(originalData), 1)
     }
+
     //2. 만약 일반그룹내의 데이터를 삭제했다면
     else if (event.target.value && this.props.selectGroupTitle) {
       this.props.allData["완료된 알림"].push(
-        event.target.value +
-          "\t\t" +
-          completeDate().format("YY. M. D, h:mm a") +
+        completeDate().format("YY. M. D, h:mm a") +
+          " : " +
+          event.target.value +
+          " ( " +
           this.props.selectGroupTitle +
-          " 으로부터 삭제됨."
+          " 에서 삭제됨" +
+          " ) "
       )
       //삭제한 인자가 원본에도 영향을 줄 수 있도록 업데이트 한다.
       this.props.allData[this.props.selectGroupTitle].splice(
@@ -59,7 +80,6 @@ class TodoListEntry extends React.Component {
         total += Object.values(this.props.allData)[i].length
       }
     }
-    console.log(this.props.allData)
     return (
       //만약 서칭된 데이터가 없을때
       <div>
@@ -69,7 +89,7 @@ class TodoListEntry extends React.Component {
               {//완료된 알림을 출력하는 그룹의 Entry라면 아래의 메시지를 상단에 고정시켜주고
               this.props.selectGroupTitle === "완료된 알림" ? (
                 <div>
-                  총 알림 갯수 ={total} :, 남은알림갯수 :{" "}
+                  총 알림 갯수 : {total} , 남은알림갯수 :{" "}
                   {total - this.props.allData["완료된 알림"].length}
                 </div>
               ) : (
@@ -82,17 +102,25 @@ class TodoListEntry extends React.Component {
               this.props.selectToDoList.map((addTodoList, index) => (
                 <div key={addTodoList + index}>
                   {this.props.selectGroupTitle === "완료된 알림" ? (
-                    //리스트 형식으로 넣어주고
-                    <li>{addTodoList}</li>
+                    //라디오 버튼의 형식으로 넣어주고, 클릭했을 때, 데이터가 다시 업데이트 될수 있도록 한다.
+                    <div>
+                      <input
+                        type="radio"
+                        onChange={this.returnData.bind(this)}
+                        className={
+                          //하드코딩으로 데이터와 클래스를 구분지었음.. 더 좋은 방법 생각해볼것!
+                          addTodoList.split(" ( ")[0].split(" : ")[1] +
+                          " " +
+                          addTodoList.split(" ( ")[1].split(" ")[0]
+                        }
+                        value={addTodoList}
+                      />
+                      {addTodoList}
+                    </div>
                   ) : (
                     <div>
                       {/*자신이 추가된 그룹을 className으로 지정해서 구분지어준다.*/}
-                      <input
-                        type="radio"
-                        className={this.props.selectGroupTitle}
-                        value={addTodoList}
-                        onChange={this.forCheck.bind(this)}
-                      />
+                      <input type="radio" value={addTodoList} onChange={this.forCheck.bind(this)} />
                       {addTodoList}
                     </div>
                   )}
@@ -106,7 +134,16 @@ class TodoListEntry extends React.Component {
           <div>
             {this.props.searchData.map((acc, index) => (
               <div key={acc + index}>
-                <input type="radio" value={acc} onChange={this.forCheck.bind(this)} />
+                <input
+                  type="radio"
+                  className={
+                    //하드코딩으로 데이터와 클래스를 구분지었음.. 더 좋은 방법 생각해볼것!
+                    acc.split(" ( ")[0].split(" : ")[1] + " " + acc.split(" ( ")[1].split(" ")[0]
+                  }
+                  value={acc}
+                  onChange={this.forCheck.bind(this)}
+                />
+
                 {acc}
               </div>
             ))}

@@ -45,14 +45,12 @@ class App extends React.Component {
   }
 
   searchDataClear(filterData) {
-    console.log(filterData)
     this.setState({
       searchData: filterData
     })
   }
 
   completeData(changeData, filterData) {
-    console.log(filterData)
     this.setState({
       allData: changeData,
       searchData: filterData
