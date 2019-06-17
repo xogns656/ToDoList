@@ -5,31 +5,84 @@
 
 .left-side-group {
   height: 100%;
-  width: 15%;
+  width: 20.9%;
+  border-right: 2px solid #dcdcdc;
   position: fixed;
   z-index: 1;
   top: 0;
   left: 0;
-  background-color: rgb(160, 128, 219);
+  background-color: #f4ffff;
   overflow-x: hidden;
 }
 
 .right-side-group {
   height: 100%;
-  width: 85%;
+  width: 79%;
   position: fixed;
   z-index: 1;
   top: 0;
   right: 0;
-  background-color: rgb(97, 211, 211);
+  background-color: #f4ffff;
   overflow-x: hidden;
 }
 
 .ListTitle {
-  background-color: rgb(194, 187, 206);
+  background-color: #f4ffff;
   height: 10%;
 }
 
 .TodoList {
+  position: absolute;
+  font-size: 20px;
   height: 90%;
+  padding: 10px;
+  left: 20px;
+}
+
+.searchBar {
+  font-size: 20px;
+  background-color: #f3f3f3ef;
+  font-style: initial;
+  position: relative;
+  text-align: center;
+  left: 5%;
+  padding: 15px;
+  margin: 8px;
+  width: 70%;
+  border-radius: 10px;
+}
+
+.inputGroup {
+  position: relative;
+  font-size: 20px;
+  background-color: #f4ffff;
+  border: 0px;
+  left: 10px;
+  margin: 5px;
+}
+
+.groupList {
+  font-size: 20px;
+  border-top: 1px solid rgb(10, 17, 17);
+  cursor: pointer;
+  padding: 30px;
+  margin: 5px;
+}
+
+.title {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 40px;
+  margin: 10px;
+  color: #323232;
+}
+
+.inputToDo {
+  position: relative;
+  border: 0px;
+  margin: 8px;
+  background-color: #f4ffff;
+  font-size: 20px;
+  height: 20px;
 }

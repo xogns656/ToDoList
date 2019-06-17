@@ -19,7 +19,7 @@ class Group extends React.Component {
   render() {
     return (
       <div>
-        <div>
+        <div className="groupList">
           <GroupEntry
             allData={this.props.allData}
             groupList={this.props.groupList}
@@ -28,7 +28,11 @@ class Group extends React.Component {
             clearCompleteData={this.props.clearCompleteData}
           />
         </div>
-        <input onKeyDown={this.inputGroup.bind(this)} />
+        <input
+          className="inputGroup"
+          placeholder="+ 그룹을 추가하세요"
+          onKeyDown={this.inputGroup.bind(this)}
+        />
       </div>
     )
   }

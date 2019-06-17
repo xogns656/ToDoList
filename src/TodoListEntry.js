@@ -10,9 +10,9 @@ class TodoListEntry extends React.Component {
     let group = className[1]
     //원본데이터중에서 원래 있던 곳으로 돌려 놓은 뒤
     this.props.allData[group].push(data)
-    //업데이트한 데이터를 완료된 알림 리스트에서 지워준다.
-    this.props.allData["완료된 알림"].splice(
-      this.props.allData["완료된 알림"].indexOf(event.target.value),
+    //업데이트한 데이터를 COMPLETE 리스트에서 지워준다.
+    this.props.allData["COMPLETE"].splice(
+      this.props.allData["COMPLETE"].indexOf(event.target.value),
       1
     )
     //업데이트한 결과를 다시 랜더링해준다.
@@ -20,7 +20,7 @@ class TodoListEntry extends React.Component {
   }
 
   forCheck(event) {
-    //라디오버튼에 체크가되면 '완료된 알림'목록으로 이동시킨다.
+    //라디오버튼에 체크가되면 'COMPLETE'목록으로 이동시킨다.
     let originalData = event.target.value
     //1. 만약 클릭된 버튼이 서칭결과에 있는 것이라면
     if (!this.props.selectGroupTitle) {
@@ -28,7 +28,7 @@ class TodoListEntry extends React.Component {
       event.target.value = splitData[0]
       let selectGroupTitle = splitData[1].split(" ")[0]
 
-      this.props.allData["완료된 알림"].push(
+      this.props.allData["COMPLETE"].push(
         completeDate().format("YY. M. D, h:mm a") +
           " : " +
           event.target.value +
@@ -49,7 +49,7 @@ class TodoListEntry extends React.Component {
 
     //2. 만약 일반그룹내의 데이터를 삭제했다면
     else if (event.target.value && this.props.selectGroupTitle) {
-      this.props.allData["완료된 알림"].push(
+      this.props.allData["COMPLETE"].push(
         completeDate().format("YY. M. D, h:mm a") +
           " : " +
           event.target.value +
@@ -86,22 +86,19 @@ class TodoListEntry extends React.Component {
         {!this.props.searchData.length ? (
           <div>
             <div>
-              {//완료된 알림을 출력하는 그룹의 Entry라면 아래의 메시지를 상단에 고정시켜주고
-              this.props.selectGroupTitle === "완료된 알림" ? (
-                <div>
-                  총 알림 갯수 : {total} , 남은알림갯수 :{" "}
-                  {total - this.props.allData["완료된 알림"].length}
-                </div>
+              {//COMPLETE을 출력하는 그룹의 Entry라면 아래의 메시지를 상단에 고정시켜주고
+              this.props.selectGroupTitle === "COMPLETE" ? (
+                <div>{total - this.props.allData["COMPLETE"].length} 개의 일정이 남아있어요</div>
               ) : (
                 //일반 그룹이라면 상단에 아무것도 뜨지 않도록 만들어준다.
                 undefined
               )}
             </div>
             <div>
-              {//만약 그룹이 완료된 알림이라면
+              {//만약 그룹이 COMPLETE이라면
               this.props.selectToDoList.map((addTodoList, index) => (
                 <div key={addTodoList + index}>
-                  {this.props.selectGroupTitle === "완료된 알림" ? (
+                  {this.props.selectGroupTitle === "COMPLETE" ? (
                     //라디오 버튼의 형식으로 넣어주고, 클릭했을 때, 데이터가 다시 업데이트 될수 있도록 한다.
                     <div>
                       <input

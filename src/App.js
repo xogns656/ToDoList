@@ -6,20 +6,22 @@ import TodoList from "./TodoList"
 
 //주의사항:
 //랜더링 메소드 내부에 삼항연산자를 써서 컴포넌트를 조작하려할때, 항상 <div>혹은 무엇인가로 감싸줘야한다!!
+//기능이 겹치는 메소드는 지우고 합쳐주기
+//es6문법 사용하여 가독성 좋게 리팩토링하기
 
 class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       //미리알림은 미리 생성된 그룹목록이다.
-      allData: { "완료된 알림": [] },
+      allData: { COMPLETE: [] },
       //검색한 데이터들만 따로 담기위한 배열이다.
       filterObj: {},
       searchData: [],
-      selectGroupTitle: "Title Portotype"
+      selectGroupTitle: "HELLO? I'M MIRI"
     }
   }
-  //완료된 알림에 들어있는 모든 배열의 내용을 삭제 해 준다.
+  //COMPLETE에 들어있는 모든 배열의 내용을 삭제 해 준다.
   clearCompleteData(UpdateAllData) {
     this.setState({
       allData: UpdateAllData
@@ -40,7 +42,7 @@ class App extends React.Component {
     this.setState({
       searchData: filterData,
       //검색어가 있으면 Searching이라는 메시지를 띄워주고, 내용이 아무것도 없다면 초기화 시켜준다.
-      selectGroupTitle: searchTitle ? "Searching for '" + searchTitle + "'" : undefined
+      selectGroupTitle: searchTitle ? "'" + searchTitle + "' 와 일치하는 알림" : undefined
     })
   }
 
@@ -114,6 +116,7 @@ class App extends React.Component {
             {/*클릭한 그룹명이 타이틀로 이동*/}
             <ListTitle changeTitle={this.state.selectGroupTitle} />
           </div>
+          <hr />
           <div className="TodoList">
             {/*클릭한 그룹내의 데이터가 이곳으로 이동*/}
             {/*Title이 "초기값"일 때는 TodoList는 알림추가로서의 기능을 사용하지 못하게 막고 전체 알림의 갯수 대비 남은 알림의 갯수를 출력하는 기능을 하도록 구현한다.*/}

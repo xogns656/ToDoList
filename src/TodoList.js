@@ -32,8 +32,12 @@ class TodoList extends React.Component {
                 outputData={this.props.outputData}
               />
               {/*선택된 그룹이 완료된 결과를 모아놓은 그룹이라면 리스트를 작성할 수 없게 만들고 일반그룹이라면 데이터를 작성할수 있도록 input을 만든다.*/}
-              {this.props.selectGroupTitle !== "완료된 알림" ? (
-                <input onKeyDown={this.inputData.bind(this)} />
+              {this.props.selectGroupTitle !== "COMPLETE" ? (
+                <input
+                  className="inputToDo"
+                  placeholder="+ 일정을 추가하세요"
+                  onKeyDown={this.inputData.bind(this)}
+                />
               ) : (
                 undefined
               )}

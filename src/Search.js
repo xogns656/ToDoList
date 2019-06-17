@@ -51,6 +51,7 @@ class Search extends React.Component {
       <div>
         <input
           className="searchBar"
+          placeholder="검색어를 입력하세요"
           onChange={this.forSearch.bind(this)}
           onKeyDown={this.forClear.bind(this)}
         />

@@ -6,7 +6,7 @@ class GroupEntry extends React.Component {
     this.props.deleteGroup(group.target.className)
   }
 
-  //완료된 알림들을 모두 삭제할때 사용하기 위한 메서드
+  //COMPLETE들을 모두 삭제할때 사용하기 위한 메서드
   forClear(group) {
     this.props.allData[group.target.className] = []
     this.props.clearCompleteData(this.props.allData)
@@ -26,7 +26,7 @@ class GroupEntry extends React.Component {
               {group}
             </span>
             {/*미리알림은 항상 존재해야 하므로 삭제하지 못하도록 막는다*/}
-            {group === "완료된 알림" ? (
+            {group === "COMPLETE" ? (
               //완료목록으로 하나라도 들어온다면 삭제버튼이 뜨도록 해준다.
               this.props.allData[group].length ? (
                 <button className={group} onClick={this.forClear.bind(this)}>
